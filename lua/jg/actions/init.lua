@@ -1,27 +1,14 @@
 local M = {}
 
-local actions = {}
-local actions_idx = 0
+local actions = require('jg.actions.actions')
 
 local cmd_for_motion = ':lua require("jg.actions").set_action_for_motion("%s")<cr>g@'
 local cmd_for_selection = ':lua require("jg.actions").call_action("%s", vim.fn.visualmode())<cr>'
 local cmd_for_line = ':lua require("jg.actions").call_action("%s", vim.v.count1)<cr>'
 
-local function set_action(fn)
-  actions_idx = actions_idx + 1
-  local name = 'action_' .. actions_idx
-  actions[name] = fn
-
-  return name
-end
-
-local function get_action(name)
-  return actions[name]
-end
-
 -- Adapted from unimpaired.vim by Tim Pope.
 function M.call_action(name, actionType)
-  local fn = get_action(name)
+  local fn = actions.get(name)
 
   -- backup settings that we will change
   local sel_save = vim.o.selection
@@ -81,7 +68,7 @@ function M.set_action_for_motion(name)
 end
 
 function M.map(key1, fn)
-  local name = set_action(fn)
+  local name = actions.set(fn)
   local key2 = key1 .. key1:sub(#key1, #key1)
 
   vim.api.nvim_set_keymap('n', key1, cmd_for_motion:format(name), { noremap = true, silent = true })
