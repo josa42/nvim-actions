@@ -7,31 +7,53 @@ local l = {}
 -- TODO: natural sort
 -- TODO: reverse sort
 
-function M.setup(key)
+function M.setup(key, opts)
   handlers.map(key, function(str)
     local lines = vim.fn.split(str, '\n')
 
     if #lines == 1 then
-      return l.sort_line(lines[1])
+      return l.sort_line(lines[1], opts)
     end
 
-    return l.sort_lines(lines)
+    return l.sort_lines(lines, opts)
   end)
 end
 
-function l.sort_lines(lines)
+function l.sort_lines(lines, opts)
   -- TODO sort nested yaml or similar, based on indent
   -- TODO handle block visual block selections
 
-  table.sort(lines, function(a, b)
+  local prefix
+  for _, line in ipairs(lines) do
+    local pre = vim.fn.split(line, '\\v\\i+')[1]
+    if prefix == nil or #pre < #prefix then
+      prefix = pre
+    end
+  end
+
+  local sortables = lines
+
+  if opts ~= nil and opts.group_by_indent == true then
+    sortables = {}
+    for _, line in ipairs(lines) do
+      local pre = vim.fn.split(line, '\\v\\i+')[1]
+      if #pre > #prefix and #sortables > 0 then
+        sortables[#sortables] = sortables[#sortables] .. '\n' .. line
+      else
+        table.insert(sortables, line)
+      end
+    end
+  end
+
+  table.sort(sortables, function(a, b)
     return a < b
   end)
 
-  return table.concat(lines, '\n')
+  return table.concat(sortables, '\n')
 end
 
 -- extracted from https://github.com/christoomey/vim-sort-motion/blob/master/autoload/sort_motion.vim
-function l.sort_line(str)
+function l.sort_line(str, opts)
   local startpos = vim.fn.match(str, '\\v\\i')
   local parts = vim.fn.split(str, '\\v\\i+')
 
