@@ -1,6 +1,6 @@
 local M = {}
 
-local actions = require('jg.actions.actions')
+local actions = require('jg.actions.registry')
 
 local cmd_for_motion = ':lua require("jg.actions.handler").set_action_for_motion("%s")<cr>g@'
 local cmd_for_selection = ':lua require("jg.actions.handler").call_action("%s", vim.fn.visualmode())<cr>'
