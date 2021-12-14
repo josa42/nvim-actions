@@ -49,6 +49,10 @@ function l.sort_lines(lines, opts)
     return a < b
   end)
 
+  if opts and opts.reverse then
+    sortables = l.reverse(sortables)
+  end
+
   return table.concat(sortables, '\n')
 end
 
@@ -77,9 +81,22 @@ function l.sort_line(str, opts)
   local sortstart = vim.fn.strlen(prefix)
   local sortend = vim.fn.strlen(str) - sortstart - vim.fn.strlen(suffix)
   local sortables = vim.fn.strpart(str, sortstart, sortend)
-  local sorted = vim.fn.join(vim.fn.sort(vim.fn.split(sortables, '\\V' .. vim.fn.escape(delimiter, '\\'))), delimiter)
+  local sorted = vim.fn.sort(vim.fn.split(sortables, '\\V' .. vim.fn.escape(delimiter, '\\')))
 
-  return prefix .. sorted .. suffix
+  if opts and opts.reverse then
+    sorted = l.reverse(sorted)
+  end
+
+  return prefix .. vim.fn.join(sorted, delimiter) .. suffix
+end
+
+function l.reverse(tbl)
+  local reversed = {}
+  for idx, value in ipairs(tbl) do
+    reversed[#tbl + 1 - idx] = value
+  end
+
+  return reversed
 end
 
 return M
