@@ -1,1 +1,0 @@
-require('jg.actions').setup()
