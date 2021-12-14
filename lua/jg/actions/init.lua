@@ -28,7 +28,7 @@ function M.call_action(name, actionType)
   local cb_save = vim.o.clipboard
 
   -- make selection and clipboard work the way we need
-  vim.opt.selection="inclusive"
+  vim.opt.selection = 'inclusive'
   vim.opt.clipboard:remove('unnnamed'):remove('unnamedplus')
 
   -- backup the unnamed register, which we will be yanking into
@@ -38,19 +38,19 @@ function M.call_action(name, actionType)
 
   if vim.fn.match(actionType, '\\v^\\d+$') == 0 then
     -- if type is a number, then select that many lines
-    vim.cmd('silent normal! V'..actionType..'$y')
+    vim.cmd('silent normal! V' .. actionType .. '$y')
   elseif vim.fn.match(actionType, '\\v^.$') == 0 then
     -- if type is 'v', 'V', or '<C-V>' (i.e. 0x16) then reselect the visual region
-    vim.cmd('silent normal! `<'..actionType..'`>y')
+    vim.cmd('silent normal! `<' .. actionType .. '`>y')
   elseif actionType == 'line' then
     -- line-based text motion
     vim.cmd("silent normal! '[V']y")
   elseif actionType == 'block' then
     -- block-based text motion
-    vim.cmd("silent normal! `[\\<C-V>`]y")
+    vim.cmd('silent normal! `[\\<C-V>`]y')
   else
     -- char-based text motion
-    vim.cmd("silent normal! `[v`]y")
+    vim.cmd('silent normal! `[v`]y')
   end
 
   -- call the user-defined function, passing it the contents of the unnamed register
@@ -73,7 +73,7 @@ function M.call_action(name, actionType)
 end
 --
 function M.set_action_for_motion(name)
-  _G.__operatorfunc =  function(type)
+  _G.__operatorfunc = function(type)
     return M.call_action(name, type)
   end
 
@@ -82,11 +82,13 @@ end
 
 function M.map(key1, fn)
   local name = set_action(fn)
-  local key2 = key1..key1:sub(#key1, #key1)
+  local key2 = key1 .. key1:sub(#key1, #key1)
 
   vim.api.nvim_set_keymap('n', key1, cmd_for_motion:format(name), { noremap = true, silent = true })
   vim.api.nvim_set_keymap('x', key1, cmd_for_selection:format(name), { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', key2, cmd_for_line:format(name), { noremap = true, silent = true })
 end
+
+function M.setup() end
 
 return M
