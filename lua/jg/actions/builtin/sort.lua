@@ -78,15 +78,15 @@ function l.group_by_indent(sortables)
 
   local prefix
   for _, line in ipairs(sortables) do
-    local pre = vim.fn.split(line, '\\v\\i+')[1] or ''
-    if prefix == nil or #pre < #prefix then
+    local pre = vim.fn.match(line, '\\v\\S')
+    if pre ~= -1 and prefix == nil or pre < prefix then
       prefix = pre
     end
   end
 
   for _, line in ipairs(sortables) do
-    local pre = vim.fn.split(line, '\\v\\i+')[1] or ''
-    if #pre > #prefix and #grouped > 0 then
+    local pre = vim.fn.match(line, '\\v\\S')
+    if (pre == -1 or pre > prefix) and #grouped > 0 then
       grouped[#grouped] = grouped[#grouped] .. '\n' .. line
     else
       table.insert(grouped, line)
@@ -95,5 +95,7 @@ function l.group_by_indent(sortables)
 
   return grouped
 end
+
+M.__test__ = l
 
 return M
