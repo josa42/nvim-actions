@@ -45,15 +45,13 @@ function l.sort_lines(lines, opts)
     end
   end
 
-  table.sort(sortables, function(a, b)
-    return a < b
-  end)
+  local sorted = vim.fn.sort(sortables)
 
   if opts and opts.reverse then
-    sortables = l.reverse(sortables)
+    sorted = vim.fn.reverse(sorted)
   end
 
-  return table.concat(sortables, '\n')
+  return table.concat(sorted, '\n')
 end
 
 -- extracted from https://github.com/christoomey/vim-sort-motion/blob/master/autoload/sort_motion.vim
@@ -78,25 +76,17 @@ function l.sort_line(str, opts)
     end
   end
 
-  local sortstart = vim.fn.strlen(prefix)
-  local sortend = vim.fn.strlen(str) - sortstart - vim.fn.strlen(suffix)
-  local sortables = vim.fn.strpart(str, sortstart, sortend)
-  local sorted = vim.fn.sort(vim.fn.split(sortables, '\\V' .. vim.fn.escape(delimiter, '\\')))
+  local sort_start = vim.fn.strlen(prefix)
+  local sort_end = vim.fn.strlen(str) - sort_start - vim.fn.strlen(suffix)
+  local sortables = vim.fn.split(vim.fn.strpart(str, sort_start, sort_end), '\\V' .. vim.fn.escape(delimiter, '\\'))
+
+  local sorted = vim.fn.sort(sortables)
 
   if opts and opts.reverse then
-    sorted = l.reverse(sorted)
+    sorted = vim.fn.reverse(sorted)
   end
 
   return prefix .. vim.fn.join(sorted, delimiter) .. suffix
-end
-
-function l.reverse(tbl)
-  local reversed = {}
-  for idx, value in ipairs(tbl) do
-    reversed[#tbl + 1 - idx] = value
-  end
-
-  return reversed
 end
 
 return M
