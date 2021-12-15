@@ -23,26 +23,10 @@ function l.sort_lines(lines, opts)
   -- TODO sort nested yaml or similar, based on indent
   -- TODO handle block visual block selections
 
-  local prefix
-  for _, line in ipairs(lines) do
-    local pre = vim.fn.split(line, '\\v\\i+')[1]
-    if prefix == nil or #pre < #prefix then
-      prefix = pre
-    end
-  end
-
   local sortables = lines
 
   if opts ~= nil and opts.group_by_indent == true then
-    sortables = {}
-    for _, line in ipairs(lines) do
-      local pre = vim.fn.split(line, '\\v\\i+')[1]
-      if #pre > #prefix and #sortables > 0 then
-        sortables[#sortables] = sortables[#sortables] .. '\n' .. line
-      else
-        table.insert(sortables, line)
-      end
-    end
+    sortables = l.group_by_indent(sortables)
   end
 
   local sorted = vim.fn.sort(sortables)
@@ -87,6 +71,29 @@ function l.sort_line(str, opts)
   end
 
   return prefix .. vim.fn.join(sorted, delimiter) .. suffix
+end
+
+function l.group_by_indent(sortables)
+  local grouped = {}
+
+  local prefix
+  for _, line in ipairs(sortables) do
+    local pre = vim.fn.split(line, '\\v\\i+')[1]
+    if prefix == nil or #pre < #prefix then
+      prefix = pre
+    end
+  end
+
+  for _, line in ipairs(sortables) do
+    local pre = vim.fn.split(line, '\\v\\i+')[1]
+    if #pre > #prefix and #grouped > 0 then
+      grouped[#grouped] = grouped[#grouped] .. '\n' .. line
+    else
+      table.insert(grouped, line)
+    end
+  end
+
+  return grouped
 end
 
 return M
