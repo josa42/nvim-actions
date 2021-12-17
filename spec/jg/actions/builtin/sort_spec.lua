@@ -43,7 +43,7 @@ describe('sort_lines()', function()
   end
 end)
 
-describe('sort_line()', function()
+  describe('sort_line()', function()
   local items = { 'zz', 'aa', '  aa', '00' }
   local sorted = { '  aa', '00', 'aa', 'zz' }
   local reversed = { 'zz', 'aa', '00', '  aa' }
