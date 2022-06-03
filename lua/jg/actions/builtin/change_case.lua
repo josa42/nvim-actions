@@ -49,6 +49,13 @@ function M.to_title(str)
   return str
 end
 
+function M.to_sentence(str)
+  str = M.to_space(str)
+  str = vim.fn.substitute(str, '\\v^.', '\\U&', '')
+
+  return str
+end
+
 function M.to_upper(str)
   str = M.to_snake(str)
   str = string.upper(str)

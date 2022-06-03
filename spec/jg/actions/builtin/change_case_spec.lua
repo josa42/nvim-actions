@@ -8,6 +8,7 @@ local strs = {
   dash_case = 'dash-case-string',
   class_case = 'ClassCaseString',
   title_case = 'Title Case String',
+  sentence_case = 'Sentence case string',
   upper_case = 'UPPER_CASE_STRING',
   space_case = 'space case string',
   dot_case = 'dot.case.string',
@@ -25,6 +26,7 @@ local tests = {
       upper_case = 'upper_case_string',
       space_case = 'space_case_string',
       dot_case = 'dot_case_string',
+      sentence_case = 'sentence_case_string',
     },
   },
   {
@@ -38,6 +40,7 @@ local tests = {
       upper_case = 'upperCaseString',
       space_case = 'spaceCaseString',
       dot_case = 'dotCaseString',
+      sentence_case = 'sentenceCaseString',
     },
   },
   {
@@ -51,6 +54,7 @@ local tests = {
       upper_case = 'upper-case-string',
       space_case = 'space-case-string',
       dot_case = 'dot-case-string',
+      sentence_case = 'sentence-case-string',
     },
   },
   {
@@ -64,6 +68,7 @@ local tests = {
       upper_case = 'UpperCaseString',
       space_case = 'SpaceCaseString',
       dot_case = 'DotCaseString',
+      sentence_case = 'SentenceCaseString',
     },
   },
   {
@@ -77,6 +82,21 @@ local tests = {
       upper_case = 'Upper Case String',
       space_case = 'Space Case String',
       dot_case = 'Dot Case String',
+      sentence_case = 'Sentence Case String',
+    },
+  },
+  {
+    fn_name = 'to_sentence',
+    expect = {
+      snake_case = 'Snake case string',
+      camel_case = 'Camel case string',
+      dash_case = 'Dash case string',
+      class_case = 'Class case string',
+      title_case = 'Title case string',
+      upper_case = 'Upper case string',
+      space_case = 'Space case string',
+      dot_case = 'Dot case string',
+      sentence_case = 'Sentence case string',
     },
   },
   {
