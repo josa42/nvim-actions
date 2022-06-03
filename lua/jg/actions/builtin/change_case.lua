@@ -5,8 +5,8 @@ function M.to_snake(str)
   -- from camelCase or ClassCase
   str = vim.fn.substitute(str, '\\v(\\l)(\\u)', '\\1_\\2', 'g')
 
-  -- from dash-case or space case
-  str = vim.fn.substitute(str, '[\\- ]', '_', 'g')
+  -- from dot-case, dash-case or space case
+  str = vim.fn.substitute(str, '[\\.\\- ]', '_', 'g')
 
   str = string.lower(str)
 
@@ -19,8 +19,8 @@ function M.to_camel(str)
     str = string.lower(str)
   end
 
-  -- from snake_case, dash-case or space case
-  str = vim.fn.substitute(str, '\\v(.)[\\-_ ](.)', '\\l\\1\\u\\2', 'g')
+  -- from snake_case, dot-case, dash-case or space case
+  str = vim.fn.substitute(str, '\\v(.)[\\.\\-_ ](.)', '\\l\\1\\u\\2', 'g')
 
   -- from ClassCase
   str = vim.fn.substitute(str, '\\v^.', '\\l&', '')
@@ -63,11 +63,11 @@ function M.to_space(str)
   return str
 end
 
---------------------------------------------------------------------------------
--- utils
+function M.to_dot(str)
+  str = M.to_snake(str)
+  str = vim.fn.substitute(str, '_', '.', 'g')
 
--- function l.split(str)
---   return string.split(str, '_')
--- end
+  return str
+end
 
 return M

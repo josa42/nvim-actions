@@ -16,7 +16,7 @@ function M.setup()
   -- M.map('gks', change_case.to_sentence)
   M.map('gk<space>', change_case.to_space)
   M.map('gk-', change_case.to_dash)
-  -- M.map('gk.', change_case.to_dot)
+  M.map('gk.', change_case.to_dot)
 
   -- M.map('gkk', change_case.cycle)
 

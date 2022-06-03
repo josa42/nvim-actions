@@ -10,7 +10,7 @@ local strs = {
   title_case = 'Title Case String',
   upper_case = 'UPPER_CASE_STRING',
   space_case = 'space case string',
-  -- dot_case = 'space.case.string',
+  dot_case = 'dot.case.string',
 }
 
 local tests = {
@@ -24,6 +24,7 @@ local tests = {
       title_case = 'title_case_string',
       upper_case = 'upper_case_string',
       space_case = 'space_case_string',
+      dot_case = 'dot_case_string',
     },
   },
   {
@@ -36,6 +37,7 @@ local tests = {
       title_case = 'titleCaseString',
       upper_case = 'upperCaseString',
       space_case = 'spaceCaseString',
+      dot_case = 'dotCaseString',
     },
   },
   {
@@ -48,6 +50,7 @@ local tests = {
       title_case = 'title-case-string',
       upper_case = 'upper-case-string',
       space_case = 'space-case-string',
+      dot_case = 'dot-case-string',
     },
   },
   {
@@ -60,6 +63,7 @@ local tests = {
       title_case = 'TitleCaseString',
       upper_case = 'UpperCaseString',
       space_case = 'SpaceCaseString',
+      dot_case = 'DotCaseString',
     },
   },
   {
@@ -72,6 +76,7 @@ local tests = {
       title_case = 'Title Case String',
       upper_case = 'Upper Case String',
       space_case = 'Space Case String',
+      dot_case = 'Dot Case String',
     },
   },
   {
@@ -84,6 +89,7 @@ local tests = {
       title_case = 'TITLE_CASE_STRING',
       upper_case = 'UPPER_CASE_STRING',
       space_case = 'SPACE_CASE_STRING',
+      dot_case = 'DOT_CASE_STRING',
     },
   },
   {
@@ -96,6 +102,20 @@ local tests = {
       title_case = 'title case string',
       upper_case = 'upper case string',
       space_case = 'space case string',
+      dot_case = 'dot case string',
+    },
+  },
+  {
+    fn_name = 'to_dot',
+    expect = {
+      snake_case = 'snake.case.string',
+      camel_case = 'camel.case.string',
+      dash_case = 'dash.case.string',
+      class_case = 'class.case.string',
+      title_case = 'title.case.string',
+      upper_case = 'upper.case.string',
+      space_case = 'space.case.string',
+      dot_case = 'dot.case.string',
     },
   },
 }
