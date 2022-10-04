@@ -25,7 +25,8 @@ function M.call_action(name, actionType)
 
   -- make selection and clipboard work the way we need
   vim.opt.selection = 'inclusive'
-  vim.opt.clipboard:remove('unnnamed'):remove('unnamedplus')
+  vim.opt.clipboard:remove('unnnamed')
+  vim.opt.clipboard:remove('unnamedplus')
 
   -- backup the unnamed register, which we will be yanking into
   local reg_save = vim.fn.getreg('@@')
