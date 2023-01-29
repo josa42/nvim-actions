@@ -2,30 +2,11 @@ name: Test
 
 on:
   push:
-    branches: [ 'main' ]
+    branches: [ 'main', 'dev' ]
   pull_request:
     branches: [ main ]
 
 jobs:
   test:
-    strategy:
-      matrix:
-        neovim: [ nightly, stable ]
+    uses: josa42/gha-workflows/.github/workflows/nvim-plugin.yml@main
 
-    name: Tests (neovim@${{ matrix.neovim }})
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: josa42/gha-plenary-busted@main
-        with:
-          neovim-version: "${{ matrix.neovim }}"
-          specs: spec
-
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: josa42/gha-stylua@main
